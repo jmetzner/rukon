@@ -1,0 +1,308 @@
+html, body {
+	color:#000000;
+	font:90% Arial,Helvetica,sans-serif;
+	height:100%;
+	margin:0;
+	overflow:hidden;
+	padding:0;
+}
+
+.headbar {
+	background:none repeat scroll 0 0 #333333;
+	border-bottom:1px solid #333333;
+	border-right:2px solid #111111;
+	color:#999999;
+	font:125%/32px Arial,Helvetica,sans-serif;
+	height:32px;
+	margin:0;
+	padding:0 0 0 0.5em;
+	position:relative;
+}
+
+.headbar :link, .headbar :visited {
+	background:url(path.gif) no-repeat scroll 100% 50% transparent;
+	color:#BBBBBB;
+	cursor:pointer;
+	padding-right:2.2em;
+	text-shadow:2px 2px 1px #333333;
+}
+
+.headbar strong {
+	color:#FFFFFF;
+	font-weight:normal;
+	padding-right:25px;
+}
+
+.path {
+	background:url(path.gif) no-repeat scroll 100% 50% transparent;
+	color:#BBBBBB;
+	padding-right:2.2em;
+	text-shadow:2px 2px 1px #333333;
+	padding:0.4em 0.5em;
+}
+
+.toolbar {
+	font-size:90%;
+	line-height:16px;
+	list-style:none outside none;
+	margin:0 0 0.5em;
+	padding:5px 5px 5px 3px;
+}
+
+.toolbar li {
+	display: inline;
+}
+
+.toolbar button {
+	background:none no-repeat scroll 2px 2px transparent;
+	border:medium none;
+	color:#666666;
+	cursor:pointer;
+	font-size:95%;
+	line-height:16px;
+	margin:0;
+	padding:2px 1em 2px 22px;
+}
+
+.toolbar button.add, .toolbar button.addLink { background-image:url(add.png); }
+.toolbar button.delete { background-image: url(delete.png); }
+.toolbar button.save { background-image: url(save.png); }
+.toolbar button:hover { background-position: 2px -30px; color: #000; }
+.toolbar button:active { background-position: 2px -62px; color: #000; }
+
+#content {
+	bottom:0;
+	left:0;
+	overflow:auto;
+	padding:1em 16px 3em 10px;
+	position:absolute;
+	right:0;
+	top:33px;
+}
+
+:link, :visited {
+	color:#BA1E16;
+	text-decoration:none;
+}
+
+.listing {
+	border:1px solid #A7A7A7;
+	border-collapse:separate;
+	border-spacing:0;
+	clear:both;
+	width:100%;
+}
+
+.listing thead th {
+	line-height:150%;
+	width:50%;
+	background:url(thead.gif) repeat-x scroll 0 0 #DADADA;
+	border-color:#A7A7A7;
+	border-style:solid;
+	border-width:0 0 1px 1px;
+	color:#333333;
+	font-size:95%;
+	font-weight:normal;
+	text-align:left;
+	text-shadow:2px 1px 2px #999999;
+	white-space:nowrap;
+}
+
+.listing thead th.key {
+	background:url(thead-key.gif) repeat-x scroll 0 0 #A7AFB6;
+	padding-top:2px;
+	text-align: left;
+}
+
+.listing thead th:first-child {
+	border-left:medium none;
+}
+
+table.listing th, table.listing td {
+	padding:0.2em 0.5em;
+}
+
+.listing tbody.content td {
+	color: #999;
+	font: normal 11px "DejaVu Sans Mono",Menlo,Courier,monospace;
+}
+
+.listing tbody.content td.key, .listing tbody.content th.key {
+	color: #333333;
+	text-align: left;
+}
+.listing tbody.content td.key a, .listing tbody.content th.key a { display: block; }
+.listing tbody.content td.key a strong, .listing tbody.content th.key a strong { font-weight: normal; }
+.listing tbody.content td.value { font-size: 10px; }
+
+.listing tbody tr td, .listing tbody tr th {
+	background:none repeat scroll 0 0 #FEFFEA;
+}
+
+.listing tbody tr.odd th, .listing tbody tr.odd td, .listing tbody.odd tr th, .listing tbody.odd tr td {
+	background:none repeat scroll 0 0 #FFFFFF;
+}
+
+.listing tbody.footer tr td {
+	background:none repeat scroll 0 0 #E9E9E9;
+	border-top:1px solid #A7A7A7;
+	color:#999999;
+	font-size:90%;
+	line-height:1.8em;
+}
+
+#paging {
+	float:right;
+}
+
+.listing tbody.footer #paging a, .listing tbody.footer #paging labe {
+	padding:0 0.5em;
+}
+
+.listing tbody.footer #paging label {
+	color:#666666;
+}
+
+.listing tbody.footer #paging select {
+	font-size:90%;
+	padding:0;
+}
+
+input, select, textarea {
+	background:none repeat scroll 0 0 #FFFFFF;
+	border-color:#999999 #DDDDDD #DDDDDD #999999;
+	border-style:solid;
+	border-width:1px;
+	margin:0;
+	padding:1px;
+}
+
+.listing tbody th:first-child, .listing tbody td:first-child {
+	border-left:medium none;
+}
+
+.listing tbody td {
+	border-left:1px solid #D9D9D9;
+	padding:0.4em 0.5em;
+	vertical-align:middle;
+}
+
+tbody.content td code {
+	display:block;
+	font-size:11px;
+	padding:2px 2px 2px 3px;
+}
+
+.content td button.delete, .content th button.delete {
+	background:url(delete-mini.png) no-repeat scroll 0 0 transparent;
+	border:medium none;
+	cursor:pointer;
+	float:left;
+	height:15px;
+	margin:0.2em 5px 0 2px;
+	padding:0;
+	width:15px;
+}
+
+.content th button.delete:hover, .content td button.delete:hover { background-position: -15px 0; }
+
+.content td code { display: block; font-size: 11px;
+  padding: 2px 2px 2px 3px; position: relative;
+}
+.content td code.string { white-space: pre-wrap; }
+.content td code.string:before { color: #ccc; content: "“";
+  position: absolute; left: -4px;
+}
+.content td code.string:after { color: #ccc; content: "”"; }
+
+.content td dl { margin: 0; padding: 0; }
+.content td dt {
+  background: transparent url(toggle-collapse.gif) 0 3px no-repeat;
+  clear: left; color: #333; cursor: pointer; line-height: 1em;
+  margin-left: -12px; padding-left: 14px;
+}
+.content td dd { line-height: 1em; margin: 0;
+  padding: 0 0 0 1em;
+}
+.content td dt.collapsed {
+  background-image: url(toggle-expand.gif);
+}
+.content td dt.inline { background-image: none; cursor: default;
+  float: left; margin-left: 0; padding-left: 2px; padding-right: .5em;
+  padding-top: 2px;
+}
+.content td dd code.string { left: 4px; text-indent: -6px; }
+.content td dd code.string:before { position: static; }
+.content input, .content textarea,
+.source textarea {
+  background: #fff; border: 1px solid; border-color: #999 #ddd #ddd #999;
+  margin: 0; padding: 1px; width: 100%;
+}
+.content th input { font-family: inherit; font-size: inherit;
+  font-weight: bold;
+}
+.content td input, #fields tbody.content td textarea,
+.source textarea {
+  font: normal 11px "DejaVu Sans Mono",Menlo,Courier,monospace;
+}
+
+dl dt { font-weight: bold; }
+code, tt, pre {
+  font-family: "DejaVu Sans Mono",Menlo,Courier,monospace;
+}
+code.key { color: #333; font-weight: bold; }
+code.string { color: #393; }
+code.number, code.boolean { color: #339; }
+code.null { color: #666; }
+
+button {
+	font-size:100%;
+}
+
+code.string {
+	color:#339933;
+}
+
+code, tt, pre {
+	font-family:"DejaVu Sans Mono",Monaco,monospace;
+}
+
+/* Inline editing */
+span.editinline-tools { margin: 2px 2px 0; float: right; margin-right: 5px; }
+span.editinline-tools button { background: transparent 0 0 no-repeat;
+  border: none; cursor: pointer; display: block; float: left; margin: 0 .2em;
+  width: 11px; height: 11px;
+}
+span.editinline-tools button:hover { background-position: 0 -22px; }
+span.editinline-tools button:active { background-position: 0 -44px; }
+span.editinline-tools button.apply {
+  background-image: url(apply.gif);
+}
+span.editinline-tools button.cancel {
+  background-image: url(cancel.gif);
+}
+
+tbody.content input, tbody.content textarea,
+tbody.source textarea {
+  background: #fff; border: 1px solid; border-color: #999 #ddd #ddd #999;
+  margin: 0; padding: 1px; width: 90%;
+}
+tbody.content td input { font-family: inherit; font-size: inherit;
+  font-weight: bold;
+}
+tbody.content td input, tbody.content td textarea,
+ tbody.source textarea {
+  font: normal 11px "DejaVu Sans Mono",Menlo,Courier,monospace;
+}
+tbody.content input.invalid,
+tbody.content textarea.invalid,
+tbody.source textarea.invalid {
+  background: #f9f4f4; border-color: #b66 #ebb #ebb #b66;
+}
+tbody.content div.grippie, #fields tbody.source div.grippie {
+  padding: 0 1px; width: 100%;
+}
+tbody.content div.error, #fields tbody.source div.error {
+  color: #d33;
+}
+

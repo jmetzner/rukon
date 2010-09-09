@@ -1,0 +1,172 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>riak bucket</title>
+    <link rel="shortcut icon" href="favicon.gif" type="image/ico" />
+
+    <script src="jquery-1.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="riak.js"></script>
+    <script type="text/javascript" src="riak-jquery.js"></script>
+    <link rel="stylesheet" href="layout.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+
+      var db = new Riak();
+      var bucket = window.location.search.substring(1);
+      var sliceStart = window.location.hash == '' ? 0 : parseInt(window.location.hash.substring(1));
+      var sliceCount = 100;
+      var hiddenCount = 1;
+      sliceCount += hiddenCount;
+
+      $('title').text($('title').text()+" - "+bucket);
+
+      $(function() {
+        $('#bucket').html(bucket);
+        db.mapReduce({"inputs":bucket, "query":[{"map":{"language":"javascript","source":"function(v) { return [{'key':v.key, 'vclock':v.vclock}]; }"}},{"reduce":{"language":"javascript","name":"Riak.reduceSort","arg":"function(a,b){ if(a.key < b.key){ return -1;} if(a.key > b.key){ return 1;} return 0; }"}},{"reduce":{"language":"javascript","name":"Riak.reduceSlice","arg":[sliceStart,sliceCount]}}]})(function(response) {
+          var odd = false;
+          var count = 0;
+          $.each(response, function(i, kc) {
+            var rowclass = odd ? " class=\"odd\"" : ""
+            $('#contentTable')
+              .append("<tr"+rowclass+"><td class=\"key\" id=\""+uniqueId(bucket, kc.key)+"\"><a href='entry.html?"+bucket+"/"+kc.key+"'>"+kc.key+"</a></td><td id=\"value_"+kc.key+"\">"+kc.vclock+"</td></tr>");
+            odd = !odd;
+            count++;
+           });
+           $('#count').html(count);
+           $('#numberofrows').html(count);
+        });
+      });
+
+      function uniqueId(bucket, key) {
+        return bucket + "-" + key;
+      }
+
+      function cleanDetailPane() {
+        $('#document').html("");
+      }
+
+      function edit(key) {
+        var selector = '#' + key + '-object';
+        selector = selector.replace(/([\.@])/g, '\\$1');
+        console.log(selector);
+        var $target = $(selector);
+        console.log($target);
+        var $error = $('<div id="error" class="error"></div>');
+
+        var $textarea = $("<textarea style='width:90%; height: 300px' />");
+        $textarea[0].id = $target[0].id;
+        var $button = $("<button>Save</button>").click(function(e) {
+
+          var json = $(selector).val();
+
+          db.get(bucket, key)(function() {
+            try {
+              db.save(bucket, key, JSON.parse(json), {returnbody: true})(function(doc) {
+                show(key);
+              });
+            } catch (err) {
+              if (!$('#error').length) {
+                $error.text(err.message).prependTo($('#document'));
+              }
+            }
+
+          });
+
+        });
+
+        $textarea.append($target.html());
+        var $form = $('<div/>');
+        $form.append($textarea);
+        $form.append($button);
+        $target.replaceWith($form);
+
+      }
+
+      function del(key) {
+        db.remove(bucket, key)(function() {
+          $('#keys > #' + uniqueId(bucket, key)).remove();
+        });
+      }
+
+      function remove(key) {
+        if (confirm("Sure you want to delete document " + key + " from bucket " + bucket + "?")) {
+          del(key);
+          cleanDetailPane();
+        }
+      }
+
+      function deleteAll() {
+        if (confirm("Are you ABSOLUTELY sure you want to delete ALL documents from bucket " + bucket + "?")) {
+          db.get(bucket)(function(response) {
+            $.each(response.keys, function(i, key) {
+              del(key);
+            });
+          });
+          cleanDetailPane();
+        }
+      }
+
+      function show(key) {
+        db.get(bucket, key)(function(response) {
+          $('#value_'+key).html("<a href='javascript:;' onclick='edit()'>new</a> | <a href='javascript:;' onclick='remove(\"" + key + "\")'>delete</a> | " +
+          "<a href='javascript:;' onclick='edit(\"" + key + "\")'>edit</a>");
+          $('#value_'+key).append("<dt>Object<dt><dd><pre id='" + key + "-object'>" + JSON.stringify(response, null, 2) + "</pre></dd>");
+        });
+
+      }
+
+    </script>
+
+  </head>
+
+  <body>
+    <div class="headbar">
+      riak
+      <span class="path">&nbsp;</span>
+      <em id="bucket"></em>
+    </div>
+
+    <div id="content">
+
+    <ul class="toolbar">
+      <li>
+        <button class="add">New Entry</button>
+        <button class="delete">Delete All Entries</button>
+      </li>
+    </ul>
+
+    <table class="listing">
+      <thead>
+        <tr>
+          <th class="key">Key</th>
+          <th class="value">Vector Clock</th>
+        </tr>
+      </thead>
+      <tbody class="content" id="contentTable">
+      </tbody>
+      <tbody class="footer">
+        <tr>
+          <td colspan="2">
+            <div id="paging">
+              <a class="prev">Previous Page</a> | 
+              <label>
+                Rows per Page
+                <select id="perpage">
+                  <option selected="">25</option>
+                </select>
+              </label> |
+              <a class="next">Next Page</a>
+            </div>
+            Showing 1-<span id="count"></span> of <span id="numberofrows"></span> rows
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    </div>
+
+  </body>
+
+</html>
