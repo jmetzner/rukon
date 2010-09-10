@@ -19,6 +19,11 @@ html, body {
 	position:relative;
 }
 
+.headbarEdit {
+	width:430px;
+	overflow:visible;
+}
+
 .headbar :link, .headbar :visited {
 	background:url(path.gif) no-repeat scroll 100% 50% transparent;
 	color:#BBBBBB;
@@ -285,6 +290,15 @@ span.editinline-tools button.apply {
 }
 span.editinline-tools button.cancel {
   background-image: url(cancel.gif);
+}
+
+#key span.editinline-tools { margin: 2px 2px 0; float:right; margin-left: 5px; display:block; }
+#key span.editinline-tools button { float:right; margin-top: 8px; margin-left: 0px; }
+#key button.apply {
+  background-image: url(apply_black.gif);
+}
+#key button.cancel {
+  background-image: url(cancel_black.gif);
 }
 
 tbody.content input, tbody.content textarea,

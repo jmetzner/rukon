@@ -2,6 +2,8 @@
   $.riak = $.riak || {};
   $.extend($.riak, {
 
+      key: null,
+      oldKey: null,
       entry: {},
       links: {},
       isDirty: false,
@@ -245,6 +247,21 @@
             }
             return true;
           }
+        });
+      },
+
+      _initEditableEntryKey: function() {
+        $("#key").makeEditable({allowEmpty: false,
+          accept: function(newKey, oldKey) {
+            if (newKey != oldKey) {
+              $.riak.oldKey = oldKey;
+              $.riak.key = newKey;
+            }
+          },
+          end: function() {
+            $(this).html($.riak.key);
+          },
+          populate: function(value) { return $.riak.key; },
         });
       },
 
