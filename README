@@ -3,13 +3,13 @@ rukon - admin interface for riak
 # features
 
  - Display contents of bucket
- - Display contents of document on click
- - Edit contents of the document (json.object)
- - Delete individual documents or all docs of a bucket
+ - Display contents of an entry
+ - Edit contents of the entry
+ - Delete individual entries
 
 # Usage
 
     git clone git://github.com/jmetzner/rukon
     ./upload.sh *
-    open http://localhost:8098/riak/rukon/index.html?bucket (change buucket to the bucket name you want to open)
+    open http://localhost:8098/riak/rukon/index.html (change bucket to the bucket name you want to open)
 
