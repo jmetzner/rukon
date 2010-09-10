@@ -28,7 +28,7 @@
 
       $(function() {
         $('#bucket').html(bucket);
-        $('#bucket').attr("href", "index.html?"+bucket);
+        $('#bucket').attr("href", "bucket.html?"+bucket);
         $('#key').html(key);
         var options = db.ensure();
         options.headers = { 'content-type': 'application/json', 'accept':'*/*, multipart/mixed',  };
@@ -46,7 +46,7 @@
               if (trimmed.match("^rel=")=="rel=") {
                 link.rel = trimmed.substring(5, trimmed.length-1);
               } else if (trimmed.match("^riaktag=")=="riaktag="){
-                link.tag = trimmed.substring(8, trimmed.length-1);
+                link.tag = trimmed.substring(9, trimmed.length-1);
               }
             }
             if (link.tag != undefined) {
@@ -61,6 +61,29 @@
 
         $(".toolbar button.add").click($.riak.addAttribute);
         $(".toolbar button.addLink").click($.riak.addLink);
+        $(".toolbar button.save").click(function(){
+            var saveOptions = {returnbody: true, headers: {} };
+            saveOptions.headers['link'] = "";
+            $.each($.riak.links, function(uri, tag){
+              if (saveOptions.headers['link'] != "") { saveOptions.headers['link'] += ", "; }
+              saveOptions.headers['link'] += "<"+uri+">; riaktag=\""+tag+"\"";
+            });
+            try {
+              db.save(bucket, key, $.riak.entry, saveOptions)(function(doc) {
+              });
+            } catch (err) {
+              if (!$('#error').length) {
+                $error.text(err.message).prependTo($('#content'));
+              }
+            }
+        });
+        $(".toolbar button.delete").click(function(){
+          if (confirm("Sure you want to delete the entry " + key + " from bucket " + bucket + "?")) {
+            db.remove(bucket, key)(function() {
+              location = location.pathname.replace(/entry\.html/, "bucket.html?"+bucket);
+            });
+          }
+        });
 
       });
 
@@ -70,8 +93,7 @@
 
   <body>
     <div class="headbar">
-      riak
-      <span class="path">&nbsp;</span>
+      <a href="index.html">riak</a>
       <a id="bucket"></a>
       <strong id="key"></strong>
     </div>

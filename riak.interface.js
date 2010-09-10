@@ -184,10 +184,10 @@
       },
 
       addLink: function() {
-        var uri = "/any/riak/relative/uri";
+        var uri = "/riak/BUCKET/KEY";
         var attrIdx = 1;
         while ($.riak.links.hasOwnProperty(uri)) {
-          uri = "/any/riak/relative/uri" + attrIdx++;
+          uri = "/riak/BUCKET/KEY" + attrIdx++;
         }
         $.riak.links[uri] = null;
         var row = $.riak.addRowForLink(uri);

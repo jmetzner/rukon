@@ -33,6 +33,10 @@ html, body {
 	padding-right:25px;
 }
 
+body.loading .headbar .spinner {
+	background: url(spinner.gif) right center no-repeat;
+}
+
 .path {
 	background:url(path.gif) no-repeat scroll 100% 50% transparent;
 	color:#BBBBBB;
@@ -130,6 +134,7 @@ table.listing th, table.listing td {
 .listing tbody.content td.key, .listing tbody.content th.key {
 	color: #333333;
 	text-align: left;
+        vertical-align: top;
 }
 .listing tbody.content td.key a, .listing tbody.content th.key a { display: block; }
 .listing tbody.content td.key a strong, .listing tbody.content th.key a strong { font-weight: normal; }
@@ -215,7 +220,7 @@ tbody.content td code {
 }
 .content td code.string:after { color: #ccc; content: "”"; }
 
-.content td dl { margin: 0; padding: 0; }
+.content td dl { margin: 0; margin-left:12px; padding: 0; }
 .content td dt {
   background: transparent url(toggle-collapse.gif) 0 3px no-repeat;
   clear: left; color: #333; cursor: pointer; line-height: 1em;
