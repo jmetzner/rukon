@@ -145,6 +145,8 @@ table.listing th, table.listing td {
 .listing tbody.content td.key a strong, .listing tbody.content th.key a strong { font-weight: normal; }
 .listing tbody.content td.value { font-size: 10px; }
 
+th.linkkey a { display: inline; margin-left: 10px; }
+
 .listing tbody tr td, .listing tbody tr th {
 	background:none repeat scroll 0 0 #FEFFEA;
 }

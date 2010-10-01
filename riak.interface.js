@@ -198,13 +198,16 @@
       },
 
       addRowForLink: function(uri, tag) {
-        var row = $("<tr><th class=\"key\"></th><td></td></tr>")
+        var row = $("<tr><th class=\"key linkkey\"></th><td></td></tr>")
           .find("th").append($("<b></b>").text(uri)).end()
           .appendTo("#linkTable");
         row.find("td").append(tag);
         $.riak._initLinkUri(row, uri);
         $.riak._initLinkTag(row, uri);
 	$(".content tr").removeClass("odd").filter(":odd").addClass("odd");
+        var bucketuri = uri.replace("/riak/", "").replace(" ", "");
+        row.find("th").append($("<a href='./entry.html?"+bucketuri+"'>open</>"));
+	row.find("a").css("display", "inline");
         return row;
       },
 
